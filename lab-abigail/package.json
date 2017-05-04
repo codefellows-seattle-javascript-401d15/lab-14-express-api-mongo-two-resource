@@ -7,8 +7,26 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "dbup": "",
+    "dbdown": ""
   },
-  "author": "",
-  "license": "MIT"
+  "author": "Abs",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.7",
+    "morgan": "^1.8.1",
+    "uuid": "^3.0.1"
+  }
 }
