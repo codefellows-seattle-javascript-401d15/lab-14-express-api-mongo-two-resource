@@ -1,10 +1,6 @@
 'use strict';
 
-// const Track = require('../model/track.js');
 const trackCtrl = require('../controller/track-controller.js');
-
-// const Album = require('../model/album.js');
-const albumCtrl = require('../controller/album-controller.js');
 
 module.exports = function(router) {
   router.post('/album/:albumId/track', (req, res) => {

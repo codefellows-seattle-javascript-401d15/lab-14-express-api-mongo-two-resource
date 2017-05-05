@@ -29,12 +29,6 @@ exports.fetchTrack = function(albumId, trackId, res) {
   .catch(() => Promise.reject(createError(500, 'Error getting track from mongo')));
 };
 
-// exports.fetchAllTracks = function(albumId, res) {
-//   if(!albumId) return Promise.reject(createError(400, 'Album ID required'));
-//   
-//   Album.findAllTracks(albumId);
-// };
-
 exports.updateTrack = function(trackId, req, res) {
   if(!trackId) return Promise.reject(createError(400, 'Track ID required'));
   
