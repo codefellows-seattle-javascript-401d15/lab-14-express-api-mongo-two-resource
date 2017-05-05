@@ -16,13 +16,11 @@ module.exports = function(router) {
   });
   
   router.put('/track/:trackId', (req, res) => {
-    console.log('req.body', req.body);
     return trackCtrl.updateTrack(req.params.trackId, req, res);
   });
   
-  router.delete('/album/:albumId/track/:id', (req, res) => {
-    albumCtrl.fetchAlbum(req.params.albumId, res)
-    .then(trackCtrl.removeTrack(req, res, req.params.id));
+  router.delete('/track/:trackId', (req, res) => {
+    return trackCtrl.removeTrack(req.params.trackId, req, res);
   });
   
   return router;

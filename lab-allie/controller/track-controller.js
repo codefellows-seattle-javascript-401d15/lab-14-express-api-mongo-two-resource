@@ -36,11 +36,17 @@ exports.fetchTrack = function(albumId, trackId, res) {
 // };
 
 exports.updateTrack = function(trackId, req, res) {
-  if(!trackId) return Promise.reject(createError(400, 'Album ID required'));
+  if(!trackId) return Promise.reject(createError(400, 'Track ID required'));
   
   Track.findOneAndUpdate(trackId, req.body, {new: true})
   .then(track => res.json(track))
   .catch(err => res.status(400).send(err.message));
 };
 
-exports.removeTrack = function() {};
+exports.removeTrack = function(trackId, req, res) {
+  if(!trackId) return Promise.reject(createError(400, 'Track ID required'));
+  
+  Track.deleteOne(trackId)
+    .then(() => res.status(204).send())
+    .catch(err => res.send(err));
+};
