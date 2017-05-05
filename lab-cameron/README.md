@@ -1,39 +1,26 @@
-![cf](https://i.imgur.com/7v5ASc8.png) lab 14 double resource express/mongo api
+![cf](https://i.imgur.com/7v5ASc8.png) lab 14 double resource express/mongo api (Pokémon themed!)
 ======
 
-# To Submit this Assignment
-  * fork this repository
-  * write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-duncan`
-  * push to your repository
-  * submit a pull request to this repository
-  * submit a link to your PR in canvas
-  * write a question and observation on canvas
+# What is This Thing Which Does the Thing?
+This is a single resource API which primarily utilizes express and mongoDB (driven by mongoose). The functionality is limited to basic RESTful CRUD operations and persists data through mongoDB. The model used is Pokémon themed to keep this lab fun for myself, but feel free to change the model whatever is relevant to you.
 
-# Build Tool Instructions
-* create a package.json that lists all dependencies and developer dependencies
- * have a start and test npm script
-* include an .eslintrc
-* include a .gitignore
- * **add the string `db` to a new line in your gitignore file so that you don't include the db directory monogd is storing its files in!**
-* include any necessary NPM scripts
-  * have a lint script for running eslint
-  * have a test script for running mocha
-  * have a default script for running the lint and mocha tasks
-* a readme with a project description and api docs
-
-# Directions
-* Create a second **Model** using `mongoose.Schema` and `mongoose.model`
- * The model can represent whatever data you choose. _e.g. note, blog post, store items_
- * It must have a relationship of many to one with the resource from from lab-13
- * one of its properties must be of type `mongoose.Schema.ObjectId` and reference an ObjectId for a resource from lab-13
-* add an array of type `mongoose.Schema.ObjectId` with a `ref` to your new-model on your model from lab-13
-* use data in your routes that return your model from lab-13
-* use the `body-parser` express middleware on `POST` and `PUT` routes
-* using the express `Router` create a route for doing **RESTFUL CRUD** operations on your second **Model**
- * thoughtfully name your routes, and be consistent
+# How to Get Started
+* fork this repository and clone a local copy of this repository to your machine:
+ * `git clone < paste repo URL here >`
+* `cd` into `lab-cameron` and type `npm init` to download the necessary node modules
 
 ## Server Endpoints
-* make three routes that operate on your second model
+### `/api/pokemon`
+* `POST` request
+ * pass data as stringified json in the body of a post request to create a resource
+  * type `http POST :3000/api/pokemon name=<name> type=<type>` into your terminal
+* `GET` request
+ * a get request with no id specified will return all pokemon in the `pokemons` schema   
 
-## Tests
-* test each new route for `200`, `204`, `400`, and `404` whenever applicable.
+### `/api/model-name/:id`
+* `GET` request
+ * pass the id of a resource though the url endpoint to `req.params` to fetch a model   
+* `PUT` request
+ * pass data as stringified json in the body of a put request to update a resource
+* `DELETE` request
+ * pass the id of a resource though the url endpoint to `req.params` to delete a model  
