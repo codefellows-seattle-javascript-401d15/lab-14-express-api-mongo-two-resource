@@ -9,7 +9,6 @@ module.exports = function(router) {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
     pokemonCtrl.fetchPokemon(req.params.id)
     .then(pokemon => {
-      console.log(pokemon);
       res.json(pokemon);
     })
     .catch(err => res.status(400).send(err.message));
@@ -17,7 +16,6 @@ module.exports = function(router) {
   router.get('/pokemon', (req, res) => {
     pokemonCtrl.gottaFetchEmAll()
     .then(pokemon => {
-      console.log(pokemon);
       res.json(pokemon);
     })
     .catch(err => res.status(404).send(err.message));
@@ -25,7 +23,6 @@ module.exports = function(router) {
   router.post('/pokemon', (req, res) => {
     pokemonCtrl.createPokemon(req.body)
     .then(pokemon => {
-      console.log(pokemon);
       res.json(pokemon);
     })
     .catch(err => res.status(400).send(err.message));
@@ -40,7 +37,6 @@ module.exports = function(router) {
     if (!req.body.name && !req.body.type) return res.status(400).send(createError(400, 'must enter a property to update'));
     pokemonCtrl.updatePokemon(req.params.id, req.body)
     .then(pokemon => {
-      console.log(pokemon);
       res.json(pokemon);
     })
     .catch(err => res.status(404).send(err.message));
@@ -49,7 +45,6 @@ module.exports = function(router) {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
     pokemonCtrl.deletePokemon(req.params.id)
     .then(() => {
-      console.log(`pokemon with { _id: '${req.params.id}' } found and deleted`);
       res.status(204).send();
     })
     .catch(err => res.status(404).send(err.message));

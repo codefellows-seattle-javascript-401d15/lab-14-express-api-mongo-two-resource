@@ -8,7 +8,6 @@ module.exports = function(router) {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
     moveCtrl.fetchMove(req.params.id)
     .then(move => {
-      console.log(move);
       res.json(move);
     })
     .catch(err => res.status(400).send(err.message));
@@ -16,7 +15,6 @@ module.exports = function(router) {
   router.get('/move', (req, res) => {
     moveCtrl.fetchMovesList()
     .then(move => {
-      console.log(move);
       res.json(move);
     })
     .catch(err => res.status(404).send(err.message));
@@ -24,7 +22,6 @@ module.exports = function(router) {
   router.post('/move', (req, res) => {
     moveCtrl.createMove(req.body)
     .then(move => {
-      console.log(move);
       res.json(move);
     })
     .catch(err => res.status(400).send(err.message));
@@ -34,7 +31,6 @@ module.exports = function(router) {
     if (!req.body.name && !req.body.attack && !req.body.power) return res.status(400).send(createError(400, 'must enter a property to update'));
     moveCtrl.updateMove(req.params.id, req.body)
     .then(move => {
-      console.log(move);
       res.json(move);
     })
     .catch(err => res.status(404).send(err.message));
@@ -43,7 +39,6 @@ module.exports = function(router) {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
     moveCtrl.deleteMove(req.params.id)
     .then(() => {
-      console.log(`move with { _id: '${req.params.id}' } found and deleted`);
       res.status(204).send();
     })
     .catch(err => res.status(404).send(err.message));

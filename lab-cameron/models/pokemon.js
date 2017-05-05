@@ -21,11 +21,6 @@ Pokemon.findByIdAndAddMove = function(id, pokemon, moveId) {
     return Pokemon.findById(id).populate('moves')
     .then(pokemon => {
       if (pokemon.moves.length >= 4) return Promise.reject(createError(400, 'this pokemon already knows 4 moves...please remove a move first'));
-      pokemon.moves.forEach(ele => {
-        if (ele._id.toString() === moveId) {
-          return Promise.reject(createError(400, 'this pokemon cannot learn this move because it already knows it'));
-        }
-      });
       this.tempPokemon = pokemon;
       this.tempPokemon.moves.push(targetMove);
       return this.tempPokemon.save();
