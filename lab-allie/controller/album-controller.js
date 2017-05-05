@@ -2,7 +2,7 @@
 
 const createError = require('http-errors');
 const Promise = require('bluebird');
-const Album = require('../model/albums.js');
+const Album = require('../model/album.js');
 
 module.exports = exports = {};
 

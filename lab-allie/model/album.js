@@ -9,10 +9,10 @@ const albumSchema = Schema({
   title: {type: String, required: true},
   year: {type: String, required: true},
   dateCreated: {type: Date, default: Date.now},
-  tracks: [{type: Schema.types.ObjectId, ref: 'track'}],
+  tracks: [{type: Schema.Types.ObjectId, ref: 'track'}],
 });
 
-const Album = module.exports.mongoose.model('album', albumSchema);
+const Album = module.exports = mongoose.model('album', albumSchema);
 
 Album.findByIdAndAddTrack = function(id, track) {
   return Album.findById(id)

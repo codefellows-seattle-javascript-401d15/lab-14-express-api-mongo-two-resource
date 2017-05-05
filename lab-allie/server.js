@@ -4,7 +4,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser').json();
 
 //Server instance references
 const app = module.exports = express();
@@ -18,7 +18,7 @@ const trackRoutes = require('./routes/track-routes.js')(router);
 
 //MongoDB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI));
+mongoose.connect(MONGODB_URI);
 
 //Middleware Plugins
 app.use(bodyParser);
