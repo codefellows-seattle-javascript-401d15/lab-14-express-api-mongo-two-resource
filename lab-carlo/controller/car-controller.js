@@ -2,7 +2,7 @@
 
 const Promise = require('bluebird');
 const createError = require('http-errors');
-const Car = require('../model/cars');
+const Car = require('../model/car');
 
 module.exports = exports = {};
 
