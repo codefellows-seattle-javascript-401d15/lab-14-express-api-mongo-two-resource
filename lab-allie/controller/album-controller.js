@@ -24,7 +24,7 @@ exports.fetchAlbum = function(id, res) {
   .catch(err => res.status(400).send(err.message));
 };
 
-exports.fetchAll = function(res) {
+exports.fetchAllAlbums = function(res) {
   return Album.find()
   .then(album => res.json(album))
   .catch(err => res.status(400).send(err.message));

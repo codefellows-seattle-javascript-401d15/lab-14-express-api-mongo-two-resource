@@ -7,16 +7,18 @@ const albumCtrl = require('../controller/album-controller.js');
 module.exports = function(router) {
   router.post('/album/:albumId/track', (req, res) => {
     let track = new Track(req.body);
-    
-    trackCtrl.createTrack(req, res, track);
+    albumCtrl.fetchAlbum(req.params.albumId, res)
+    .then(trackCtrl.createTrack(req, res, track));
   });
   
   router.get('/album/:albumId/track/:id', (req, res) => {
-    trackCtrl.fetchTrack(req.params.id, res);
+    albumCtrl.fetchAlbum(req.params.albumId, res)
+    .then(trackCtrl.fetchTrack(req.params.trackId, res));
   });
   
   router.get('/album/:albumId/track', (req, res) => {
-    trackCtrl.fetchAllTracks(res);
+    albumCtrl.fetchAlbum(req.params.albumId, res)
+    .then(trackCtrl.fetchAllTracks(res));
   });
   
   router.put('/album/:albumId/track/:trackId', (req, res) => {
@@ -25,7 +27,8 @@ module.exports = function(router) {
   });
   
   router.delete('/album/:albumId/track/:id', (req, res) => {
-    trackCtrl.removeTrack(req, res, req.params.id);
+    albumCtrl.fetchAlbum(req.params.albumId, res)
+    .then(trackCtrl.removeTrack(req, res, req.params.id));
   });
   
   return router;
