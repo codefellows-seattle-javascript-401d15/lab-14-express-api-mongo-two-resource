@@ -3,14 +3,16 @@
 const Promise = require('bluebird');
 const createError = require('http-errors');
 const Food = require('../model/food-model');
+const Recipe = require('../model/recipe-model');
+
 
 module.exports = exports = {};
 
-exports.createItem = function(req, res, food) {
+exports.createItem = function(req, res, id, food) {
 
   if(!food) return Promise.reject(createError(400, 'bad requst'));
 
-  new Food(req.body).save()
+  Recipe.findByIdAndAddFood(id, food)
   .then(food => {
     res.json(food);
   })

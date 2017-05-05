@@ -13,17 +13,18 @@ const recipeSchema = Schema({
 
 const Recipe = module.exports = mongoose.model('recipe', recipeSchema);
 
-Recipe.findByIdAndAddNote = function(id, food) {
+Recipe.findByIdAndAddFood = function(id, food) {
+  console.log(id);
   return Recipe.findById(id)
   .then(recipe => {
-    console.log(recipe);
+    console.log('recipe', recipe);
     food.recipeId = recipe._id;
-
     this.tempRecipe = recipe;
     return new Food(food).save();
   })
   .then(food => {
-    this.tempRecipe.foods.push(food._id);
+    console.log('food', food);
+    this.tempRecipe.food.push(food._id);
     this.tempFood = food;
     return this.tempRecipe.save();
   })
