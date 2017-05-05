@@ -54,6 +54,11 @@ module.exports = function(router) {
     })
     .catch(err => res.status(404).send(err.message));
   });
+  router.delete('/pokemon/:pokemonId/move/:id', (req, res) => {
+    Pokemon.findByIdAndRemoveMove(req.params.pokemonId, req.body, req.params.id)
+    .then(pokemon => res.status(204).json(pokemon))
+    .catch(err => res.status(404).send(err.message));
+  });
 
   return router;
 };

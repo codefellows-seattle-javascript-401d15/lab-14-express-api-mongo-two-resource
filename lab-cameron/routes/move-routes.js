@@ -1,8 +1,6 @@
 'use strict';
 
 const createError = require('http-errors');
-// const Move = require('../models/move');
-// const Pokemon = require('../models/pokemon');
 const moveCtrl = require('../controllers/move-controller');
 
 module.exports = function(router) {

@@ -7,7 +7,7 @@ const Promise = require('bluebird');
 const bodyParser = require('body-parser').json();
 
 // server instance refs
-const app = express();
+const app = module.exports = express();
 const router = express.Router();
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/pokemon-env';
@@ -22,8 +22,8 @@ mongoose.connect(MONGODB_URI);
 
 // middleware/plugins
 app.use(bodyParser);
-app.use('/api', moveRoutes);
 app.use('/api', pokemonRoutes);
+app.use('/api', moveRoutes);
 
 
 
