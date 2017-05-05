@@ -13,19 +13,11 @@ module.exports = function(router) {
   
   router.get('/album/:albumId/track/:id', (req, res) => {
     return trackCtrl.fetchTrack(req.params.albumId, req.params.trackId, res);
-
-    // albumCtrl.fetchAlbum(req.params.albumId, res)
-    // .then(trackCtrl.fetchTrack(req.params.trackId, res));
   });
   
-  router.get('/album/:albumId/track', (req, res) => {
-    albumCtrl.fetchAlbum(req.params.albumId, res)
-    .then(trackCtrl.fetchAllTracks(res));
-  });
-  
-  router.put('/album/:albumId/track/:trackId', (req, res) => {
-    albumCtrl.fetchAlbum(req.params.albumId, res)
-    .then(trackCtrl.updateTrack(req, res, req.params.trackId));
+  router.put('/track/:trackId', (req, res) => {
+    console.log('req.body', req.body);
+    return trackCtrl.updateTrack(req.params.trackId, req, res);
   });
   
   router.delete('/album/:albumId/track/:id', (req, res) => {

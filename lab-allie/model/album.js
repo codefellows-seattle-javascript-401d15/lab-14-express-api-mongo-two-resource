@@ -49,3 +49,21 @@ Album.findAlbumAndFindTrack = function(albumId, trackId) {
     return this.tempTrack;
   });  
 };
+
+Album.findAlbumAndUpdateTrack = function(albumId, trackId) {
+  return Album.findById(albumId)
+  .populate('tracks')
+  // .then(album => {
+  //   this.tempAlbum = album;
+  //   return this.tempAlbum;
+  // })
+  .then(album => {
+    this.tempAlbum = album;
+    console.log('album works', album.tracks);
+    return Album.findByIdAndUpdate(albumId, {new: true});
+  })
+  .then((album) => {
+    console.log('album', album);
+    return this.tempTrack;
+  });
+};
