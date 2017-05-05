@@ -39,12 +39,12 @@ describe('Server method - Test', () => {
 
       it('should respond with a 200 on proper request', done => {
         chai.request(server)
-        .post('/api/song')
+        .post('/api/song ')
         .send({title: 'test-title', artist: 'test-artist', album: 'test-album'})
-        .end((err, res) => {
+        .end((req, res) => {
           console.log(res.status);
+          // console.log('the songObj', res.body);
           songObj.push(res.body);
-          // console.log('the songObj', songObj[0]._id);
           expect(res.status).to.equal(200);
 
           done();
@@ -158,44 +158,44 @@ describe('Server method - Test', () => {
 
   describe('GET method', () => {
 
-    describe('/api/song?id endpoint', () => {
+    describe('/api/song/:id endpoint', () => {
 
       it('should respond with a 200 on proper request', done => {
         // console.log(songObj[0.]._id);
         chai.request(server)
-        .get(`/api/song?id=${songObj[0]._id}`)
+        .get(`/api/song/${songObj[0]._id}`)
         .end((err, res) => {
+          console.log('get by id', songObj[0]._id);
           console.log(res.status);
           expect(res.status).to.equal(200);
           done();
         });
       });
 
+      it('should return the song by id', done => {
+        chai.request(server)
+        .get(`/api/song/${songObj[0]._id}`)
+        .end((err, res) => {
+          // console.log('res.body...', res.body);
+          expect(res.body._id).to.equal(songObj[0]._id);
+
+          done();
+        });
+      });
+
       it('should repsond with a 404 no id entered', done => {
         chai.request(server)
-        .get(`/api/song?id=null`)
+        .get(`/api/song id=null`)
         .end((err, res) => {
           console.log(res.status);
           expect(res.status).to.equal(404);
           done();
         });
       });
-      //
-      // it('should return the song by id', done => {
-      //   fs.readFile('./data/json-storage/test-post.json', (err, data) => {
-      //     data = JSON.parse(data.toString());
-      //
-      //     expect(data.id).to.equal('test-post');
-      //   });
-      //
-      //   done();
-      // });
-      //
+
       // it('should return the song with proper title property', done => {
-      //   fs.readFile('./data/json-storage/test-post.json', (err, data) => {
-      //     data = JSON.parse(data.toString());
       //
-      //     expect(data.title).to.equal('test-title');
+      //     expect(res.body.title).to.equal('test-title');
       //   });
       //
       //   done();

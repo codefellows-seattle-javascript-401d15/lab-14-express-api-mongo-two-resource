@@ -15,6 +15,7 @@ mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
 require('./routes/song-routes')(router);
+require('./routes/album-routes')(router);
 
 app.use(bodyParser);
 app.use(router);

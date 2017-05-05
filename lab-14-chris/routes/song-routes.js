@@ -1,66 +1,83 @@
 'use strict';
 
-const Song = require('../model/song');
 const debug = require('debug')('http:server');
-// const songCtrl = require('../controller/song-controller');
+const createError = require('http-errors');
+const songCtrl = require('../controller/song-controller');
 
 module.exports = function(router) {
 
   router.post('/api/song', (req, res) => {
-    debug('routes.post()');
-    new Song(req.body).save()
+    debug('routes.post(song)');
+    // console.log(req.body, 'req.body');
+    songCtrl.createSong(req.body)
     .then(song => {
-      console.log('the added song ', song);
+      console.log('post song', song);
       res.json(song);
     })
     .catch(err => res.status(400).send(err.message));
   });
 
-  router.get('/api/song', (req, res) => {
+  router.get('/api/song/', (req, res) => {
     debug('routes.get()');
-    // console.log(req);
-    if(!req.query.id) {
-      Song.find()
-      .then()
-      .catch(err => res.status(400).send('no id queried ', err.message));
-    } else {
-      Song.findById(req.query.id)
-      .then(song => {
-        console.log('here is the song you requested: ', song);
-        res.json(song);
-      })
-      .catch(err => res.status(404).send(err.message));
-    }
+    songCtrl.fetchAllSongs()
+    .then(song => {
+      console.log(song);
+      res.json(song);
+    })
+    .catch(err => res.status(404).send(err.message));
+  });
+
+  router.get('/api/song/:id', (req, res) => {
+    debug('routes.getById()');
+
+    if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
+
+    songCtrl.fetchSong(req.params.id)
+    .then(song => {
+      console.log(song);
+      res.json(song);
+    })
+    .catch(err => res.status(400).send(err.message));
   });
 
   router.put('/api/song', (req, res) => {
     debug('routes.put()');
-    if(!req.query.id) {
-      Song.find()
-      .then()
-      .catch(err => res.status(400).send('no id queried', err.message));
-    } else {
-      Song.findByIdAndUpdate(req.query.id, req.body, {new: true})
-      .then(song => {
-        console.log('here is the song with updates ', song);
-        res.json(song);
-      });
-    }
+
+    if (!req.query.id) return res.status(400).send(createError(400, 'bad request'));
+    if (!req.body.name && !req.body.type) return res.status(400).send(createError(400, 'must change or add a property'));
+    songCtrl.updateSong(req.query.id, req.body)
+    .then(song => {
+      console.log(song);
+      res.json(song);
+    })
+    .catch(err => res.status(404).send(err.message));
   });
 
   router.delete('/api/song', (req, res) => {
     debug('routes.delete()');
-    if(!req.query.id) {
-      Song.find()
-      .then()
-      .catch(err => res.status(400).send('no id queried ', err.message));
-    } else {
-      Song.findByIdAndRemove(req.query.id)
-      .then(song => {
-        console.log('you deleted this song ', song);
-        res.json(song);
-      })
-      .catch(err => res.status(404).send(err.message));
-    }
+    console.log(req.body);
+    if (!req.query.id) return res.status(400).send(createError(400, 'bad request'));
+
+    songCtrl.deleteSong(req.query.id)
+    .then(() => {
+      debug('deleteSong()');
+      res.json(`Deleted song: ${req.query.id}`);
+      console.log(`Deleted song: ${req.query.id}`);
+      res.status(204);
+    })
+    .catch(err => res.status(404).send(err.message));
+  });
+
+  router.delete('/api/song/del-all', (req, res) => {
+    debug('routes.deleteAllSongs()');
+
+    songCtrl.deleteAll()
+    .then(() => {
+      debug('deleteAll()');
+
+      console.log('all records deleted');
+      res.json('all records deleted');
+      res.status(204);
+    });
   });
 };
