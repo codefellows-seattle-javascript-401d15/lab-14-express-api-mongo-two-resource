@@ -1,6 +1,6 @@
 'use strict';
 
-const Track = require('../model/track.js');
+// const Track = require('../model/track.js');
 const trackCtrl = require('../controller/track-controller.js');
 
 // const Album = require('../model/album.js');
@@ -8,27 +8,19 @@ const albumCtrl = require('../controller/album-controller.js');
 
 module.exports = function(router) {
   router.post('/album/:albumId/track', (req, res) => {
-    // let track = new Track(req.body);
-    
     return trackCtrl.createTrack(req.params.albumId, req.body, res);
   });
   
-  
-  // router.post('/album/:albumId/track', (req, res) => {
-  //   // let track = new Track(req.body);
-  //   albumCtrl.fetchAlbum(req.params.albumId, res)
-  //   .then(trackCtrl.createTrack(req, res, track));
-  // });
-  
   router.get('/album/:albumId/track/:id', (req, res) => {
-    albumCtrl.fetchAlbum(req.params.albumId, res)
-    .then(trackCtrl.fetchTrack(req.params.trackId, res));
+    return trackCtrl.fetchTrack(req.params.albumId, req.params.trackId, res);
+
+    // albumCtrl.fetchAlbum(req.params.albumId, res)
+    // .then(trackCtrl.fetchTrack(req.params.trackId, res));
   });
   
   router.get('/album/:albumId/track', (req, res) => {
     albumCtrl.fetchAlbum(req.params.albumId, res)
     .then(trackCtrl.fetchAllTracks(res));
-    // .then(console.log)
   });
   
   router.put('/album/:albumId/track/:trackId', (req, res) => {

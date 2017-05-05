@@ -33,3 +33,19 @@ Album.findByIdAndAddTrack = function(id, track) {
     return this.tempTrack;
   });
 };
+
+Album.findAlbumAndFindTrack = function(albumId, trackId) {
+  return Album.findById(albumId)
+  .populate('tracks')
+  .then(album => {
+    this.tempAlbum = album;
+    return this.tempAlbum.save();
+  })
+  .then(track => {
+    this.tempTrack = track;
+    return Album.findById(trackId);
+  })
+  .then(() => {
+    return this.tempTrack;
+  });  
+};

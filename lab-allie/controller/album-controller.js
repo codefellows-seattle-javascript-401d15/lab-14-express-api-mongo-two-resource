@@ -18,7 +18,6 @@ exports.fetchAlbum = function(id, res) {
   if(!id) return Promise.reject(createError(400, 'ID required'));
   
   return Album.findById(id)
-  .populate('tracks')
   .then(album => {
     res.json(album);
   })

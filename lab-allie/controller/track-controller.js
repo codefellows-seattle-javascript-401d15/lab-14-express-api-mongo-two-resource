@@ -18,7 +18,17 @@ exports.createTrack = function(albumId, track, res) {
   .catch(() => Promise.reject(createError(500, 'Error saving track in mongo')));
 };
 
-exports.fetchTrack = function() {};
+exports.fetchTrack = function(albumId, trackId, res) {
+  if(!albumId) return Promise.reject(createError(400, 'Album ID required'));
+  // if(!trackId) return Promise.reject(createError(400, 'Track ID required'));
+  
+  Album.findAlbumAndFindTrack(albumId, trackId)
+  .then(fetchedTrack => {
+    console.log('fetched track', res.json(fetchedTrack));
+    return fetchedTrack;
+  })
+  .catch(() => Promise.reject(createError(500, 'Error getting track from mongo')));
+};
 
 exports.fetchAllTracks = function() {};
 
