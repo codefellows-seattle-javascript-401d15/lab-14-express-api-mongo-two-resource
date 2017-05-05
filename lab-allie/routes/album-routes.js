@@ -6,7 +6,6 @@ const albumCtrl = require('../controller/album-controller.js');
 module.exports = function(router) {
   router.post('/album', (req, res) => {
     let album = new Album(req.body);
-    console.log('album', album);
     albumCtrl.createAlbum(req, res, album);
   });
   

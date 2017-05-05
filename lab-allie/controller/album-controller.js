@@ -33,7 +33,7 @@ exports.fetchAllAlbums = function(res) {
 exports.updateAlbum = function(req, res, id) {
   if(!id) return Promise.reject(createError(400, 'ID required'));
   
-  Album.findOneAndUpdate(id, req.body, {new: true})
+  Album.findOneAndUpdate(id, req.body)
   .then(album => res.json(album))
   .catch(err => res.status(400).send(err.message));
 };
