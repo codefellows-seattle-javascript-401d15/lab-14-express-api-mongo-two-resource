@@ -8,15 +8,6 @@ const expect = chai.expect;
 chai.use(http);
 
 describe('Server module', function() {
-  // let app;
-  // before(done => {
-  //   app = server.listen(6660);
-  //   done();
-  // });
-  // after(done => {
-  //   app.close();
-  //   done();
-  // });
   describe('#POST', function() {
     let pokemons = [];
     after(done => {
@@ -173,6 +164,45 @@ describe('Server module', function() {
         .send({attack: 40}) // attack isn't a property which exists on the Pokemon model
         .end((err, res) => {
           expect(res).to.have.status(400);
+          done();
+        });
+      });
+    });
+    describe('requests made to /api/pokemon/:pokemonId/move/:id', function() {
+      let moves = [];
+      before(done => {
+        chai.request(server)
+        .post('/api/move')
+        .send({name: 'hyper beam', attack: 100, power: 5})
+        .end((err, res) => {
+          let move = JSON.parse(res.text.toString());
+          moves.push(move);
+          done();
+        });
+      });
+      after(done => {
+        moves.forEach(ele => {
+          chai.request(server)
+          .delete(`/api/move/${ele._id}`)
+          .end();
+        });
+        done();
+      });
+      it('Should respond with status 200', done => {
+        let testmon = pokemons[0];
+        let testmove = moves[0];
+        chai.request(server)
+        .put(`/api/pokemon/${testmon._id}/move/${testmove._id}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+      });
+      it('Should respond with status 404 given no id', done => {
+        chai.request(server)
+        .put('/api/pokemon/:pokemonId/move/:id')
+        .end((err, res) => {
+          expect(res).to.have.status(404);
           done();
         });
       });

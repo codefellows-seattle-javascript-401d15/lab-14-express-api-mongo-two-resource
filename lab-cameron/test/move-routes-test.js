@@ -8,15 +8,6 @@ const expect = chai.expect;
 chai.use(http);
 
 describe('Server module', function() {
-  // let app;
-  // before(done => {
-  //   app = server.listen(6660);
-  //   done();
-  // });
-  // after(done => {
-  //   app.close();
-  //   done();
-  // });
   describe('#POST', function() {
     let moves = [];
     after(done => {
@@ -27,7 +18,7 @@ describe('Server module', function() {
       });
       done();
     });
-    describe('/api/move', function() {
+    describe('requests made to /api/move', function() {
       it('Should respond with status 200 on a proper request', done => {
         chai.request(server)
         .post('/api/move')
@@ -91,7 +82,7 @@ describe('Server module', function() {
           done();
         });
       });
-      describe('requests made to /api/moveCtrl', function() {
+      describe('requests made to /api/move', function() {
         it('Should respond with status 200 on a proper request and return whole schema', done => {
           chai.request(server)
           .get('/api/move')
