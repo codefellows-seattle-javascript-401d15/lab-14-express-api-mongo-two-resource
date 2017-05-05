@@ -7,12 +7,15 @@ const Album = require('../model/album.js');
 
 module.exports = exports = {};
 
-exports.createTrack = function(albumId, track) {
+exports.createTrack = function(albumId, track, res) {
   if(!track) return Promise.reject(createError(400, 'Album required'));
   
   Album.findByIdAndAddTrack(albumId, track)
-  .then(newTrack => newTrack)
-  .catch(Promise.reject(createError(400, 'Error in newTrack creation')));
+  .then(newTrack => {
+    res.json(newTrack);
+    console.log('new track', newTrack);
+  })
+  .catch(() => Promise.reject(createError(500, 'Error saving track in mongo')));
 };
 
 exports.fetchTrack = function() {};

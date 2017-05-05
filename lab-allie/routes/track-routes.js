@@ -10,7 +10,7 @@ module.exports = function(router) {
   router.post('/album/:albumId/track', (req, res) => {
     // let track = new Track(req.body);
     
-    trackCtrl.createTrack(req.params.albumId, req.body);
+    return trackCtrl.createTrack(req.params.albumId, req.body, res);
   });
   
   

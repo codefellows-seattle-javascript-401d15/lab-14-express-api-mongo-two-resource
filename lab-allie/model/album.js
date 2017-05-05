@@ -27,6 +27,9 @@ Album.findByIdAndAddTrack = function(id, track) {
     this.tempTrack = track;
     return this.tempAlbum.save();
   })
-  .then(console.log('in findByIdAndAddTrack, this.tempAlbum.tracks', this.tempAlbum.tracks))
-  .then(() => this.tempTrack);
+  .then((album) => console.log('in findByIdAndAddTrack, this.tempAlbum.tracks', album.tracks))
+  .then(() => {
+    console.log('this.temptrack', this.tempTrack);
+    return this.tempTrack;
+  });
 };
