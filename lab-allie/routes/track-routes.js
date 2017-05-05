@@ -8,17 +8,17 @@ const albumCtrl = require('../controller/album-controller.js');
 
 module.exports = function(router) {
   router.post('/album/:albumId/track', (req, res) => {
-    let track = new Track(req.body);
+    // let track = new Track(req.body);
     
-    trackCtrl.createTrack(req, res, track);
+    trackCtrl.createTrack(req.params.albumId, req.body);
   });
   
   
-  router.post('/album/:albumId/track', (req, res) => {
-    let track = new Track(req.body);
-    albumCtrl.fetchAlbum(req.params.albumId, res)
-    .then(trackCtrl.createTrack(req, res, track));
-  });
+  // router.post('/album/:albumId/track', (req, res) => {
+  //   // let track = new Track(req.body);
+  //   albumCtrl.fetchAlbum(req.params.albumId, res)
+  //   .then(trackCtrl.createTrack(req, res, track));
+  // });
   
   router.get('/album/:albumId/track/:id', (req, res) => {
     albumCtrl.fetchAlbum(req.params.albumId, res)
@@ -28,6 +28,7 @@ module.exports = function(router) {
   router.get('/album/:albumId/track', (req, res) => {
     albumCtrl.fetchAlbum(req.params.albumId, res)
     .then(trackCtrl.fetchAllTracks(res));
+    // .then(console.log)
   });
   
   router.put('/album/:albumId/track/:trackId', (req, res) => {
