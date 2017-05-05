@@ -2,11 +2,18 @@
 
 const createError = require('http-errors');
 const Promise = require('bluebird');
-const Track = require('../model/track.js');
+// const Track = require('../model/track.js');
+const Album = require('../model/album.js');
 
 module.exports = exports = {};
 
-exports.createTrack = function() {};
+exports.createTrack = function(req, res, track) {
+  if(!track) return Promise.reject(createError(400, 'Album required'));
+  
+  Album.findByIdAndAddTrack(req.params.trackId, req.body)
+  .then(track => res.json(track))
+  .catch(err => res.status(404).send(err.message));
+};
 
 exports.fetchTrack = function() {};
 
@@ -15,6 +22,8 @@ exports.fetchAllTracks = function() {};
 exports.updateTrack = function() {};
 
 exports.removeTrack = function() {};
+
+
 
 
 exports.fetchAlbum = function(id, res) {
