@@ -1,0 +1,29 @@
+{
+  "name": "lab-carlo",
+  "version": "1.0.0",
+  "description": "lab 14",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "Carlo",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "http-errors": "^1.6.1",
+    "mongoose": "^4.9.7"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.1"
+  }
+}
