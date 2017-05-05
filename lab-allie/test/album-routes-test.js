@@ -9,7 +9,7 @@ const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'});
 
 chai.use(http);
 
-describe('Server module tests', function() {
+describe('Ablum route tests', function() {
   let app;
   before(done => {
     app = server.listen(8000);
