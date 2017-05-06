@@ -173,9 +173,9 @@ describe('Track Route Tests', function() {
         });
       });
       
-      it('should respond with 404 if not found', done => {
+      it('should respond with 400 if it is a bad request', done => {
         chai.request(server)
-        .get('/')
+        .get('/api')
         .end((err, res) => {
           if(err) console.error(err);
           expect(res.status).to.equal(404);
@@ -206,10 +206,10 @@ describe('Track Route Tests', function() {
     let mockAlbum;
     before(done => {
       chai.request(server)
-      .post('/abi/album')
+      .post('/api/album')
       .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
       .end((err, res) => {
-        if (err) console.error(err);
+        if(err) console.error(err);
         mockAlbum = res.body;
         done();
       });
@@ -223,11 +223,54 @@ describe('Track Route Tests', function() {
       .end((err, res) => {
         if(err) console.error(err);
         mockTrack = res.body;
+        console.log('mocktrack', mockTrack);
         done();
       });
     });
     
-    describe
+    describe('the entry should update', function() {
+      it('should update the track name', done => {
+        chai.request(server)
+        .put(`/api/track/${mockTrack._id}`)
+        .send({'trackName': 'Uptown Girl'})
+        .end((err, res) => {
+          if (err) console.error(err);
+          expect(res.body.trackName).to.equal('Uptown Girl');
+          done();
+        });
+      });
+      
+      it('should no longer equal the original track name', done => {
+        chai.request(server)
+        .put(`/api/track/${mockTrack._id}`)
+        .send({'trackName': 'Uptown Girl'})
+        .end((err, res) => {
+          if (err) console.error(err);
+          expect(res.body.trackName).to.not.equal('This Night');
+          done();
+        });
+      });
+      
+      it('should respond with 404 if not found', done => {
+        chai.request(server)
+        .get('/api')
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+      
+      it('should respond with 400 if it is a bad request', done => {
+        chai.request(server)
+        .get('/api')
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
     
     after(done => {
       chai.request(server)
@@ -246,7 +289,32 @@ describe('Track Route Tests', function() {
     });
   });
   
-  describe('Testing DELETE for an existing track', function() {});
+  describe('Testing DELETE for an existing track', function() {
+    let mockAlbum;
+    before(done => {
+      chai.request(server)
+      .post('/api/album')
+      .send({'artist': 'Billy Joel', 'title': 'An Innocent Man', 'year': '1983'})
+      .end((err, res) => {
+        if(err) console.error(err);
+        mockAlbum = res.body;
+        done();
+      });
+    });
+    
+    let mockTrack;
+    before(done => {
+      chai.request(server)
+      .post(`/api/album/${mockAlbum._id}/track`)
+      .send({'trackName': 'This Night'})
+      .end((err, res) => {
+        if(err) console.error(err);
+        mockTrack = res.body;
+        console.log('mocktrack', mockTrack);
+        done();
+      });
+    });
+  });
 
   describe('Testing an undefined endpoint', function() {});
 
