@@ -40,7 +40,7 @@ exports.updateTrack = function(trackId, req, res) {
 exports.removeTrack = function(trackId, req, res) {
   if(!trackId) return Promise.reject(createError(400, 'Track ID required'));
   
-  Track.deleteOne(trackId)
+  Track.findByIdAndRemove(trackId)
     .then(() => res.status(204).send())
     .catch(err => res.send(err));
 };
