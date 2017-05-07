@@ -34,7 +34,7 @@ exports.deleteHawk = function(hawkId){
   if (!hawkId) return Promise.reject(createError(400, 'hawkId required'));
   return Seahawk.find(hawkId)
   .then(hawk => {
-    return Defense.findByIdAndRemoveHawk(hawk.defId, hawkId);
+    return Defense.findByIdAndRemoveHawk(hawk[0].defId, hawk[0]._id);
   })
   .then(data => Promise.resolve(data))
   .catch(err => Promise.reject(createError(500, err.message)));

@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const Hawk = require('./seahawk');
 
 const DefSchema = Schema({
@@ -30,5 +29,12 @@ Defense.findByIdAndAddHawk = function(id, hawk){ //need def id and hawk(which is
 
 Defense.findByIdAndRemoveHawk = function(defId, hawkId){
   //code this: should find defense, remove hawk id from hawks, and remove the hawk
-
+  return Defense.findById(defId)
+  .then(defense => {
+    let hawkInd = defense.hawks.indexOf(hawkId);
+    defense.hawks.splice(hawkInd, 1);
+    return defense.save();
+  })
+  .then(() => Hawk.remove({ '_id': hawkId}))
+  .catch(err => Promise.reject(err));
 };
