@@ -289,7 +289,7 @@ describe('Track Route Tests', function() {
     });
   });
   
-  describe('Testing DELETE for an existing track', function() {
+  describe.only('Testing DELETE for an existing track', function() {
     let mockAlbum;
     before(done => {
       chai.request(server)
@@ -311,6 +311,58 @@ describe('Track Route Tests', function() {
         if(err) console.error(err);
         mockTrack = res.body;
         console.log('mocktrack', mockTrack);
+        done();
+      });
+    });
+    
+    describe('it should delete the track', function() {
+      //this doesn't delete it...not sure why
+      it.only('should successfully remove the track from the album', done => {
+        chai.request(server)
+        .delete(`/api/track/${mockTrack._id}`)
+        .end((err) => {
+          if (err) console.error(err);
+          console.log('mocktrack in delete',mockTrack);
+          expect(mockTrack.trackName).to.be.empty;
+          done();
+        });
+      });
+
+      //this one won't work until the test above works
+      it('should return a status of 404 after deleting the item', done => {
+        chai.request(server)
+        .del(`/api/track/${mockTrack._id}`)
+        .end((err, res) => {
+          if (err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+      
+      //this works
+      it('should return an error on a bad request', done => {
+        chai.request(server)
+        .get('/api/')
+        .end((err, res) => {
+          if (err) console.error(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+    
+    after(done => {
+      chai.request(server)
+      .delete(`/api/album/${mockAlbum._id}/track`)
+      .end(() => {
+        done();
+      });
+    });
+    
+    after(done => {
+      chai.request(server)
+      .delete(`/api/album/${mockAlbum._id}`)
+      .end(() => {
         done();
       });
     });
