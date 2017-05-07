@@ -18,12 +18,12 @@ exports.createSummoner = function(summoner){
 exports.fetchSummoner = function(id){
   debug('#fetchSummoner');
   if(!id) return Promise.reject(createError(400, 'You forgot a target summoner id'));
-  return Summoner.findById(id);
+  return Summoner.findById(id).populate('minions');
 };
 
 exports.fetchSummoners = function(){
   debug('#fetchSummoners');
-  return Summoner.find({});
+  return Summoner.find({}).populate('minions');
 };
 
 exports.updateSummoner = function(id, summoner){

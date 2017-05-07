@@ -40,7 +40,6 @@ module.exports = function(router){
     .catch(err => res.status(400).send(err.message));
   });
 
-
   //update minion
   router.put('/minion/:id', (req, res) => {
     if(!req.params.id) return res.status(400).send(createError('You done fucked up the PUT, boy!!'));

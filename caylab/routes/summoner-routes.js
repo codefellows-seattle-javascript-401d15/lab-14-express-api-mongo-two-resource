@@ -1,19 +1,26 @@
 'use strict';
 
 const createError = require('http-errors');
+const Summoner = require('../models/summoner.js');
 const summonerCtrl = require('../controllers/summoner-controller.js');
 
 module.exports = function(router){
-  
-  router.get('/summoner/:id', (req, res) => {//get one
-    if(!req.params.id) return res.status(400).send(createError('You too stupid to find a summoner, boy?'));
-    summonerCtrl.fetchSummoner(req.params.id);
-  });
-
 
   router.get('/summoner', (req, res) => {
-    if(!req.params.id) return res.status(400).send(createError('You forgot '));
-    summonerCtrl.fetchSummoners();
+    summonerCtrl.fetchSummoners()
+    .then(summoner =>{
+      console.log(summoner);
+      res.json(summoner);
+    });
+  });
+
+  router.get('/summoner/:id', (req, res) => {//get one
+    if(!req.params.id) return res.status(400).send(createError('You too stupid to find a summoner, boy?'));
+    summonerCtrl.fetchSummoner(req.params.id)
+    .then(summoner => {
+      console.log(summoner);
+      res.json(summoner);
+    });
   });
 
   //===========================================
@@ -21,6 +28,15 @@ module.exports = function(router){
     summonerCtrl.createSummoner(req.body)
     .then(summoner => res.json(summoner))
     .catch(err => res.status(400).send(err.message));
+  });
+
+  router.put('/summoner/:summonerId/minion/:minionId', (req, res) => {
+    Summoner.findByIdAndAddMinion(req.params.summonerId, req.body, req.params.minionId)
+    .then(summoner => {
+      console.log(summoner);
+      res.json(summoner);
+    })
+    .catch(err => console.error(err));
   });
 
   //===========================================
