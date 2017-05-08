@@ -20,10 +20,11 @@ describe('server module', function() {
     describe('create a lure record', function() {
       it('should get a 200 response', done => {
         chai.request(server)
-        .post('/api/lure')
+        .post('/lure')
         .send({ name: 'momba', type: 'rattler', targets: 'trout', water: 'fresh' })
         .end((err, res) => {
           let lure = JSON.parse(res.text);
+          console.log('HERE IS THE LURE', lure);
           lures.push(lure);
           if (err) console.error(err);
           expect(res.status).to.equal(200);
@@ -33,7 +34,7 @@ describe('server module', function() {
 
       it('should get a 404 response if requesting a bad route', done => {
         chai.request(server)
-        .post('/api/boogers')
+        .post('/boogers')
         .send({ name: 'momba', type: 'rattler', targets: 'trout', water: 'fresh' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
@@ -43,7 +44,7 @@ describe('server module', function() {
 
       it('should make a record with a string for a name, momba', done => {
         chai.request(server)
-        .post('/api/lure')
+        .post('/lure')
         .send({ name: 'momba', type: 'rattler', targets: 'trout', water: 'fresh' })
         .end((err, res) => {
           let lure = JSON.parse(res.text);
@@ -58,7 +59,7 @@ describe('server module', function() {
 
       it('should make a record with a string for type, rattler', done => {
         chai.request(server)
-        .post('/api/lure')
+        .post('/lure')
         .send({ name: 'momba', type: 'rattler', targets: 'trout', water: 'fresh' })
         .end((err, res) => {
           let lure = JSON.parse(res.text);
@@ -73,7 +74,7 @@ describe('server module', function() {
 
       it('should make a record with a string for targets, trout', done => {
         chai.request(server)
-        .post('/api/lure')
+        .post('/lure')
         .send({ name: 'momba', type: 'rattler', targets: 'trout', water: 'fresh' })
         .end((err, res) => {
           let lure = JSON.parse(res.text);
@@ -88,7 +89,7 @@ describe('server module', function() {
 
       it('should make a record with a string for water, fresh', done => {
         chai.request(server)
-        .post('/api/lure')
+        .post('/lure')
         .send({ name: 'momba', type: 'rattler', targets: 'trout' })
         .end((err, res) => {
           let lure = JSON.parse(res.text);
@@ -107,7 +108,7 @@ describe('server module', function() {
 
     before(done => {
       chai.request(server)
-      .post('/api/lure')
+      .post('/lure')
       .send({ name: 'test', type: 'rattler', targets: 'trout' })
       .end((err, res) => {
         let lure = JSON.parse(res.text);
@@ -120,7 +121,7 @@ describe('server module', function() {
 
       it('should have response status of 200', done => {
         chai.request(server)
-        .put(`/api/lure/${lures[0]._id}`)
+        .put(`/lure/${lures[0]._id}`)
         .send({name: 'minnow', type: 'rattler', targets: 'trout'})
         .end((err, res) => {
           console.log('lures array: ', lures[0]._id);
@@ -132,7 +133,7 @@ describe('server module', function() {
 
       it('should have a response status of 404 if given bad or no schema', done => {
         chai.request(server)
-          .put('/api/boogers')
+          .put('/boogers')
           .send({name: lures[0].name, type: lures[0].type, targets: lures[0].targets, id: lures[0].id})
           .end((err, res) => {
             expect(res.status).to.equal(404);
@@ -143,7 +144,7 @@ describe('server module', function() {
 
     it('should modify a specific record if given the correct inputs', done => {
       chai.request(server)
-        .put(`/api/lure/${lures[0]._id}`)
+        .put(`/lure/${lures[0]._id}`)
         .send({name: 'newString'})
         .end((err, res) => {
           console.log('Here is the NAME of the id I am changing ', res.body.name);
@@ -157,7 +158,7 @@ describe('server module', function() {
 
     before(done => {
       chai.request(server)
-      .post('/api/lure')
+      .post('/lure')
       .send({ name: 'test', type: 'rattler', targets: 'trout' })
       .end((err, res) => {
         let lure = JSON.parse(res.text);
@@ -170,7 +171,7 @@ describe('server module', function() {
       describe('a properly formatted request', function() {
         it('should return 200', done => {
           chai.request(server)
-            .get(`/api/lure/${lures[0]._id}`)
+            .get(`/lure/${lures[0]._id}`)
             .send({name: 'minnow', type: 'rattler', targets: 'trout'})
             .end((err, res) => {
               console.error(err);
@@ -182,7 +183,7 @@ describe('server module', function() {
         describe('an improperly formatted request', function() {
           it('should return 404, bad request', done => {
             chai.request(server)
-              .get(`/api/boogers/${lures[0].id}`)
+              .get(`/boogers/${lures[0].id}`)
               .send({name: 'minnow', type: 'rattler', targets: 'trout'})
               .end((err, res) => {
                 expect(res).to.have.status(404);
@@ -192,7 +193,7 @@ describe('server module', function() {
 
           after(done => {
             chai.request(server)
-            .delete('/api/lure/')
+            .delete('/lure/')
             .send('db.lures.drop()')
             .end();
             done();
@@ -202,7 +203,7 @@ describe('server module', function() {
 
             before(done => {
               chai.request(server)
-              .post('/api/lure')
+              .post('/lure')
               .send({ name: 'test', type: 'rattler', targets: 'trout' })
               .end((err, res) => {
                 let lure = JSON.parse(res.text);
@@ -213,7 +214,7 @@ describe('server module', function() {
 
             it('should return 204', done => {
               chai.request(server)
-              .delete(`/api/lure/${lures[0]._id}`)
+              .delete(`/lure/${lures[0]._id}`)
               .send()
               .end((err, res) => {
                 expect(res).to.have.status(204);
@@ -223,7 +224,7 @@ describe('server module', function() {
 
             it('should return 404 if given bad schema', done => {
               chai.request(server)
-              .delete(`/api/boogers/${lures[0]._id}`)
+              .delete(`/boogers/${lures[0]._id}`)
               .send()
               .end((err, res) => {
                 expect(res).to.have.status(404);

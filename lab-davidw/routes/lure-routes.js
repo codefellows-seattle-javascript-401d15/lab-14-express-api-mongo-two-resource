@@ -6,17 +6,16 @@ const createError = require('http-errors');
 module.exports = function(router) {
 
   router.post('/lure', (req, res) => {
-    console.log(req);
-    lureCtrl.createItem(req, res)
+
+    lureCtrl.createLure(req, res)
     .then(lure => {
       res.json(lure);
-      console.log(lure);
     });
   });
 
   router.get('/lure/', (req, res) => {
 
-    lureCtrl.fetchAllItems()
+    lureCtrl.fetchAllLures()
     .then(lure => {
       res.json(lure);
     })
@@ -26,7 +25,7 @@ module.exports = function(router) {
   router.get('/lure/:id', (req, res) => {
 
     if(!req.params.id) return res.status(400).send(createError('Bad Request, id required.'));
-    lureCtrl.fetchItem(req.params.id)
+    lureCtrl.fetchLure(req.params.id)
     .then(lure => {
       res.json(lure);
     })
@@ -34,10 +33,11 @@ module.exports = function(router) {
   });
 
   router.put('/lure/', (req, res) => {
-    lureCtrl.updateItem(req, res, req.params.id, req.body);
+    lureCtrl.updateLure(req, res, req.params.id, req.body);
   });
 
   router.delete('/lure/:id', (req, res) => {
-    lureCtrl.deleteItem(req.params.id, res);
+    lureCtrl.deleteLure(req.params.id, res);
   });
+
 };

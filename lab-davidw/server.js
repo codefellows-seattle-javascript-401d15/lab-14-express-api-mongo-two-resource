@@ -8,7 +8,7 @@ const morgan = require('morgan');
 
 const app = module.exports = express();
 const router = express.Router();
-const PORT = process.env.PORT || 3100;
+const PORT = process.env.PORT || 3001;
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/lureEnv';
 
