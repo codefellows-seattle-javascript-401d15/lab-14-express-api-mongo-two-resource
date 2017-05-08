@@ -28,56 +28,33 @@ describe('HTTP Server module', function(){
 
   describe('POST method', function() {
 
-    let recipeTest;
-    before(done => {
-      chai.request(server)
-      .post('/api/recipe')
-      .send({'recipeName': 'tacos', 'time': 1.5})
-      .end((err, res) => {
-        if(err) console.error(err);
-        recipeTest = res.body;
-        done();
-      });
-    });
-
     describe('Verify item created', function() {
-      it('should create a food', done => {
+      it('should create recipe and verify recipeName', done => {
         chai.request(server)
-        .post(`/api/recipe/${recipeTest._id}/food`)
-        .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
+        .post('/api/recipe')
+        .send({'recipeName': 'tacos', 'time': 1.5})
         .end((err, res) => {
-          if(err) console.error(err);
-          expect(res.body.name).to.equal('onions');
+          if (err) console.error(err);
+          expect(res.body.recipeName).to.equal('tacos');
           done();
         });
       });
 
-      it('should create food and verify type', done => {
+      it('should create recipe and verify type', done => {
         chai.request(server)
-        .post(`/api/recipe/${recipeTest._id}/food`)
-        .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
+        .post('/api/recipe')
+        .send({'recipeName': 'apple', 'time': 1.5})
         .end((err, res) => {
           if (err) console.error(err);
-          expect(res.body.cost).to.equal(4);
-          done();
-        });
-      });
-
-      it('should create food and verify cost', done => {
-        chai.request(server)
-        .post(`/api/recipe/${recipeTest._id}/food`)
-        .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
-        .end((err, res) => {
-          if (err) console.error(err);
-          expect(res.body.type).to.equal('yellow');
+          expect(res.body.time).to.equal(1.5);
           done();
         });
       });
 
       it('should be an object', done => {
         chai.request(server)
-        .post(`/api/recipe/${recipeTest._id}/food`)
-        .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
+        .post('/api/recipe')
+        .send({'recipeName': 'apple', 'time': 1.5})
         .end((err, res) => {
           if (err) console.error(err);
           expect(res).to.be.a('object');
@@ -100,8 +77,8 @@ describe('HTTP Server module', function(){
 
       it('should respond with 200 on proper request', done => {
         chai.request(server)
-        .post(`/api/recipe/${recipeTest._id}/food`)
-        .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
+        .post('/api/recipe')
+        .send({'recipeName': 'apple', 'time': 1.5})
         .end((err, res) => {
           if (err) console.error(err);
           expect(res.status).to.equal(200);
@@ -109,52 +86,23 @@ describe('HTTP Server module', function(){
         });
       });
     });
-
-    after(done => {
-      chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}`)
-      .end(() => {
-        done();
-      });
-    });
   });
 
   describe('GET method', function() {
-    let recipeTest;
+    let recipeTest = [];
     before(done => {
       chai.request(server)
-      .post('/api/recipe')
+      .post('/api/recipe/')
       .send({'recipeName': 'tacos', 'time': 1.5})
       .end((err, res) => {
-        if(err) console.error(err);
-        recipeTest = res.body;
+        let recipe = res.body;
+        recipeTest.push(recipe);
         done();
       });
     });
-
-    let foodTest = [];
-    before(done => {
-      chai.request(server)
-      .post('/api/food/')
-      .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
-      .end((err, res) => {
-        let food = res.body;
-        foodTest.push(food);
-        done();
-      });
-    });
-
     after(done => {
       chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}/food/${foodTest[0]._id}`)
-      .end(() => {
-        done();
-      });
-    });
-
-    after(done => {
-      chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}`)
+      .delete(`/api/recipe/${recipeTest[0]._id}`)
       .end(() => {
         done();
       });
@@ -163,7 +111,7 @@ describe('HTTP Server module', function(){
     describe('Verify route status and errors', function () {
       it('should return 200 status on proper request', done => {
         chai.request(server)
-        .get(`/api/recipe/${recipeTest._id}/food/${foodTest[0]._id}`)
+        .get(`/api/recipe/${recipeTest[0]._id}`)
         .end((err, res) => {
           if (err) console.error(err);
           expect(res.status).to.equal(200);
@@ -194,41 +142,20 @@ describe('HTTP Server module', function(){
   });
 
   describe('PUT method', function() {
-    let recipeTest;
+    let recipeTest = [];
     before(done => {
       chai.request(server)
       .post('/api/recipe')
-      .send({'recipeName': 'tacos', 'time': 1.5})
+      .send({'recipeName': 'apple', 'time': 1.5})
       .end((err, res) => {
-        if(err) console.error(err);
-        recipeTest = res.body;
+        let recipe = res.body;
+        recipeTest.push(recipe);
         done();
       });
     });
-
-    let foodTest = [];
-    before(done => {
-      chai.request(server)
-      .post('/api/food/')
-      .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
-      .end((err, res) => {
-        let food = res.body;
-        foodTest.push(food);
-        done();
-      });
-    });
-
     after(done => {
       chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}/food/${foodTest[0]._id}`)
-      .end(() => {
-        done();
-      });
-    });
-
-    after(done => {
-      chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}`)
+      .delete(`/api/recipe/${recipeTest[0]._id}`)
       .end(() => {
         done();
       });
@@ -236,21 +163,21 @@ describe('HTTP Server module', function(){
 
     describe('Verify route status and errors', function () {
 
-      it('should change the food name and type', done => {
+      it('should change the recipe recipeName and type', done => {
         chai.request(server)
-        .put(`/api/food/${foodTest[0]._id}`)
-        .send({'name': 'banana', 'type': 'yellow'})
+        .put(`/api/recipe/${recipeTest[0]._id}`)
+        .send({'recipeName': 'chicken tacos', 'time': 2})
         .end((err, res) => {
           if (err) console.error(err);
-          expect(res.body.name).to.equal('banana');
+          expect(res.body.recipeName).to.equal('chicken tacos');
           done();
         });
       });
 
       it('should respond with 200 on proper request', done => {
         chai.request(server)
-        .put(`/api/recipe/${recipeTest._id}/food/${foodTest[0]._id}`)
-        .send({'name': 'banana', 'type': 'yellow'})
+        .put(`/api/recipe/${recipeTest[0]._id}`)
+        .send({'recipeName': 'chicken tacos', 'time': '2'})
         .end((err, res) => {
           if (err) console.error(err);
           expect(res.status).to.equal(200);
@@ -271,41 +198,20 @@ describe('HTTP Server module', function(){
   });
 
   describe('DELETE method', function() {
-    let recipeTest;
+    let recipeTest = [];
     before(done => {
       chai.request(server)
       .post('/api/recipe')
       .send({'recipeName': 'tacos', 'time': 1.5})
       .end((err, res) => {
-        if(err) console.error(err);
-        recipeTest = res.body;
+        let recipe = res.body;
+        recipeTest.push(recipe);
         done();
       });
     });
-
-    let foodTest = [];
-    before(done => {
-      chai.request(server)
-      .post('/api/food/')
-      .send({'name': 'onions', 'type': 'yellow', 'cost': 4})
-      .end((err, res) => {
-        let food = res.body;
-        foodTest.push(food);
-        done();
-      });
-    });
-
     after(done => {
       chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}/food/${foodTest[0]._id}`)
-      .end(() => {
-        done();
-      });
-    });
-
-    after(done => {
-      chai.request(server)
-      .delete(`/api/recipe/${recipeTest._id}`)
+      .delete(`/api/recipe/${recipeTest[0]._id}`)
       .end(() => {
         done();
       });
@@ -314,7 +220,7 @@ describe('HTTP Server module', function(){
     describe('Verify route status and errors', function () {
       it('should respond with 204 if requested file has been deleted', done => {
         chai.request(server)
-        .delete(`/api/recipe/${recipeTest._id}/food/${foodTest[0]._id}`)
+        .delete(`/api/recipe/${recipeTest[0]._id}`)
         .send({})
         .end((err, res) => {
           if (err) console.error(err);
