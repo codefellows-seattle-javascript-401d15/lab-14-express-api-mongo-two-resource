@@ -1,0 +1,20 @@
+{
+  "name": "lab-james",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ithalis/lab-14-express-api-mongo-two-resource.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ithalis/lab-14-express-api-mongo-two-resource/issues"
+  },
+  "homepage": "https://github.com/Ithalis/lab-14-express-api-mongo-two-resource#readme"
+}
