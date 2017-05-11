@@ -11,10 +11,11 @@ const PORT = process.env.PORT || 3000;
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/ninja-env';
 
+const ninjaRoutes = require('./routes/ninja-routes')(router);
+
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-require('./routes/ninja-routes')(router);
 
 app.use(bodyParser);
 app.use(router);

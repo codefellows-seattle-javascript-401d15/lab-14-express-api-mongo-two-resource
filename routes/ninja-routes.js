@@ -27,6 +27,17 @@ module.exports = function(router) {
     .catch(err => res.status(404).send(err.message));
   });
 
+  router.put('/api/ninja/:id', (req, res) => {
+    if(!req.params.id) return res.status(400).send(createError(400, 'Horrible request, the WORST!'));
+    if(!req.body.name && !req.body.clan && !req.body.weapons) return res.status(400).send(createError(400, 'UPDATE the properties, stupid!'));
+    ctrlNinja.editNinja(req.params.id, req.body)
+    .then(ninja => {
+      console.log(ninja);
+      res.json(ninja);
+    })
+    .catch(err => res.status(404).send(err.message));
+  });
+
   router.get('/api/ninja/:id', (req, res) => {
     if(!req.params.id) return res.status(400).send(createError(400, 'Ninja too stealthy.'));
     ctrlNinja.getANinja(req.params.id)

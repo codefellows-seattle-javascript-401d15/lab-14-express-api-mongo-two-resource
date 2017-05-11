@@ -1,0 +1,29 @@
+{
+  "name": "lab-14-express-api-mongo-two-resource",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab 14 double resource express/mongo api\r ======",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renegadellama/lab-14-express-api-mongo-two-resource.git"
+  },
+  "author": "Isak Swearingen",
+  "license": "MIT",
+  "dependencies": {
+  "bluebird": "^3.5.0",
+  "body-parser": "^1.17.1",
+  "express": "^4.15.2",
+  "mongoose": "^4.9.7"
+},
+  "bugs": {
+    "url": "https://github.com/renegadellama/lab-14-express-api-mongo-two-resource/issues"
+  },
+  "homepage": "https://github.com/renegadellama/lab-14-express-api-mongo-two-resource#readme"
+}
