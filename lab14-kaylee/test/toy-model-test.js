@@ -1,18 +1,23 @@
-// 'use strict';
-//
-// const Dog = require('../model/dog');
-// const expect = require('chai').expect;
-//
-// describe('dog module', function() {
-//   describe('when creating a new Dog object', function() {
-//     let newDog = new Dog({name: 'Joe Joe', breed: 'bichon frise'});
-//     it('should have a name of "Joe Joe"', done => {
-//       expect(newDog.name).to.equal('Joe Joe');
-//       done();
-//     });
-//     it('should have a breed of "bichon frise"', done => {
-//       expect(newDog.breed).to.equal('bichon frise');
-//       done();
-//     });
-//   });
-// });
+'use strict';
+
+const Toy = require('../models/toy');
+const expect = require('chai').expect;
+
+describe('toy module', () => {
+
+  describe('when creating a new Toy object', () => {
+    let newToy = new Toy({type: 'ball', color: 'yellow'});
+    it('should have a type of "ball"', done => {
+      expect(newToy.type).to.equal('ball');
+      done();
+    });
+    it('should have a color of "yellow"', done => {
+      expect(newToy.color).to.equal('yellow');
+      done();
+    });
+    it('should have a dogId property', done => {
+      expect(newToy).to.have.property('dogId');
+      done();
+    });
+  });
+});
