@@ -20,7 +20,7 @@ module.exports = function(router) {
   router.post('/dog', (req, res) => {
     dogCtrl.createDog(req.body)
     .then(dog => res.json(dog))
-    .catch(err => res.status(err.status).send(err.message));
+    .catch(err => res.status(400).send(err.message));
   });
   router.put('/dog/:id', (req, res) => {
     if(req.params.id) {

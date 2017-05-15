@@ -3,7 +3,7 @@
 const toyCtrl = require('../controllers/toy-controller');
 
 module.exports = function(router) {
-  
+
   router.get('/toy/:id', (req, res) => {
     if(req.params.id) {
       toyCtrl.fetchOneToy(req.params.id)
