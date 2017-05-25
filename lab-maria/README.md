@@ -3,7 +3,6 @@ Small Node.js App for Codefellows Coding Bootcamp.
 
 Keep track of your favorite Steven Universe Characters and their affiliations using MONGOdb!
 
-
 ##Installation:
 
 1. clone this repository and ``cd`` into it
