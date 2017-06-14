@@ -1,0 +1,45 @@
+{
+  "name": "lab-14-express-mongo-two-resource-api",
+  "version": "0.1.0",
+  "description": "api for fishing lures and baits",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "lint": "eslint./**"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidGWheeler/lab-14-express-api-mongo-two-resource.git"
+  },
+  "keywords": [
+    "TDD",
+    "BDD",
+    "Express",
+    "API",
+    "ReSTful"
+  ],
+  "author": "DavidGWheeler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidGWheeler/lab-14-express-api-mongo-two-resource/issues"
+  },
+  "homepage": "https://github.com/DavidGWheeler/lab-14-express-api-mongo-two-resource#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.8",
+    "morgan": "^1.8.1"
+  }
+}
