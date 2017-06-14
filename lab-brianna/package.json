@@ -1,0 +1,25 @@
+{
+  "name": "lab-brianna",
+  "version": "1.0.0",
+  "description": "This is a lab assignment for Code Fellows Full-Stack JS course.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brisourceful/lab-14-express-api-mongo-two-resource.git"
+  },
+  "keywords": [
+    "node",
+    "mocha",
+    "express",
+    "mongodb"
+  ],
+  "author": "Brianna Burrows",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brisourceful/lab-14-express-api-mongo-two-resource/issues"
+  },
+  "homepage": "https://github.com/brisourceful/lab-14-express-api-mongo-two-resource#readme"
+}
