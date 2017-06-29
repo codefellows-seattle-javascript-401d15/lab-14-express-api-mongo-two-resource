@@ -8,6 +8,7 @@ const listSchema = Schema({//eslint-disable-line
   name: {type: String, required: true},
   time: {type: Date, default: Date.now},
   notes: [{type: Schema.Types.ObjectId, ref: 'note'}]
+
 })
 
 const List = module.exports = mongoose.model('list', listSchema)
@@ -25,5 +26,6 @@ List.findByIdAndAddNote = function(id, note) {
     return this.tempList.save()
   })
   .then(() => this.tempNote)
+
   .catch(err => Promise.reject(err))
 }

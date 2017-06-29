@@ -1,6 +1,7 @@
 'use strict';
 
 const List = require('../models/list');
+
 // const listCtrl = require('../controllers/list-control')
 
 module.exports = function(router) {
