@@ -10,7 +10,6 @@ module.exports = function(router){
   router.get('/minion', (req, res) => {
     minionCtrl.fetchMinions()
     .then(minion => {
-      console.log(minion)
       res.json(minion)
     })
     .catch(err => res.status(404).send(err.message))
@@ -19,7 +18,6 @@ module.exports = function(router){
     if(!req.params.id) return res.status(400).send(createError('Incorrectly formatted the GET.'))
     minionCtrl.fetchMinion(req.params.id)
     .then(minion => {
-      console.log(minion)
       res.json(minion)
     })
   })
@@ -28,7 +26,6 @@ module.exports = function(router){
     if(!req.body) return res.status(400).send(createError('Incorrectly formatted the POST!!'))
     Summoner.findByIdAndAddMinion(req.params.summonerId, req.body)
     .then(minion => {
-      console.log(minion)
       res.json(minion)
     })
     .catch(err => res.status(400).send(err.message))
@@ -39,7 +36,6 @@ module.exports = function(router){
     if(!req.body.name && !req.body.details) return res.status(400).send(createError('Incorrectly formatted the PUT!!'))
     minionCtrl.updateMinion(req.params.id, req.body)
     .then(minion => {
-      console.log(minion)
       res.json(minion)
     })
   })
@@ -48,7 +44,6 @@ module.exports = function(router){
     if(!req.params.id) return res.status(400).send(createError('Incorrectly formatted'))
     minionCtrl.deleteMinion(req.params.id)
     .then(minion => {
-      console.log(minion)
       res.json(minion)
     })
   })

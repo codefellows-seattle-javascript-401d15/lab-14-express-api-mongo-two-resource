@@ -16,9 +16,6 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/minion-env';
 const summonerRoutes = require('./routes/summoner-routes.js')(router);
 const minionRoutes = require('./routes/minion-routes.js')(router);
 
-// require('./routes/minion-routes.js')(router);
-// require('./routes/summoner-routes.js')(router);
-
 //promisify
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
