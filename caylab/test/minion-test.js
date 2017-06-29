@@ -7,16 +7,26 @@ const expect = require('chai').expect
 
 chai.use(http)
 
-describe('Summoner Routes Module', function(){
+describe('Minion Routes Module', function(){
   let app
-  let testSummoner = {
-    'name': 'Nicol Bolas',
+  let testMinion = {
+    'name': 'Plague Belcher',
+    'ability': 'Whenever another zombie dies, each opponent loses 1 life.',
   }
+  let testMinionId
   let testSummonerId
   describe('CRUDDY operations', () => {
     before(done => {
       app = server.listen(8080)
       done()
+    })
+    before(done => {
+      chai.request(server)
+      .get('/api/summoner')
+      .end((err, res) => {
+        testSummonerId = res.body[0]._id
+        done()
+      })
     })
     after(done => {
       app.close()
@@ -24,10 +34,10 @@ describe('Summoner Routes Module', function(){
     })
 
     describe('POST operations', () => {
-      it('should make a new summoner return a 200', done => {
+      it('should make a new minion return a 200', done => {
         chai.request(server)
-        .post('/api/summoner')
-        .send(testSummoner)
+        .post(`/api/minion/${testSummonerId}`)
+        .send(testMinion)
         .end((err, res) => {
           expect(res.status).to.equal(200)
           done()
@@ -35,7 +45,7 @@ describe('Summoner Routes Module', function(){
       })
       it('should fail and return a 400', done => {
         chai.request(server)
-        .post('/api/summoner')
+        .post(`/api/minion/${testSummonerId}`)
         .send('BLARG')
         .end((err, res) => {
           expect(res.status).to.equal(400)
@@ -45,11 +55,11 @@ describe('Summoner Routes Module', function(){
     })
 
     describe('GET requests', () => {
-      it('should get all summoners and return a 200', done => {
+      it('should get all minions and return a 200', done => {
         chai.request(server)
-        .get('/api/summoner')
+        .get('/api/minion')
         .end((err, res) => {
-          testSummonerId = res.body[0]._id
+          testMinionId = res.body[0]._id
           expect(res.status).to.equal(200)
           done()
         })
@@ -62,61 +72,61 @@ describe('Summoner Routes Module', function(){
           done()
         })
       })
-      it('should get a single summoner, and return a 200', done => {
+      it('should get a single minion, and return a 200', done => {
         chai.request(server)
-        .get(`/api/summoner/${testSummonerId}`)
+        .get(`/api/minion/${testMinionId}`)
         .end((err, res) => {
           expect(res.status).to.equal(200)
           done()
         })
       })
-      it('should return a res.body with an ID that === the testSummonerId', done => {
+      it('should return a res.body with an ID that === the testMinionId', done => {
         chai.request(server)
-        .get(`/api/summoner/${testSummonerId}`)
+        .get(`/api/minion/${testMinionId}`)
         .end((err, res) => {
-          expect(res.body._id).to.equal(testSummonerId)
+          expect(res.body._id).to.equal(testMinionId)
           done()
         })
       })
     })
     describe('PUT requests', () => {
-      let putSummoner = {
-        'name': 'Nicol Bolas',
-        'ability': 'God Pharoahs Presence: When Nicol Bolas enters the field, search your library for up to three legendary gods, and put them onto the battlefield.',
+      let putMinion = {
+        'name': 'Wayward Servant',
+        'ability': 'Whenever another zombie enters the battlefield, each opponent loses 1 life, and you gain 1 life.',
       }
       it('should return a res of 200', done => {
         chai.request(server)
-        .put(`/api/summoner/${testSummonerId}`)
-        .send(putSummoner)
+        .put(`/api/minion/${testMinionId}`)
+        .send(putMinion)
         .end((err, res) => {
           expect(res.status).to.equal(200)
           done()
         })
       })
-      it('should match the name and ability of the summoner', done => {
+      it('should match the name and ability of the minion', done => {
         chai.request(server)
-        .get(`/api/summoner/${testSummonerId}`)
+        .get(`/api/minion/${testMinionId}`)
         .end((err, res) => {
-          expect(res.body._id).to.equal(testSummonerId)
-          expect(res.body.name).to.equal(putSummoner.name)
-          expect(res.body.ability).to.equal(putSummoner.ability)
+          expect(res.body._id).to.equal(testMinionId)
+          expect(res.body.name).to.equal(putMinion.name)
+          expect(res.body.ability).to.equal(putMinion.ability)
           done()
         })
       })
     })
 
-    describe('Deleting a summoner', () => {
+    describe('Deleting a minion', () => {
       it('should throw an error 404', done => {
         chai.request(server)
-        .delete('/api/summoner/')
+        .delete('/api/minion/')
         .end((err, res) => {
           expect(res.status).to.equal(404)
           done()
         })
       })
-      it('should delete a summoner and return a 200', done => {
+      it('should delete a minion and return a 200', done => {
         chai.request(server)
-        .delete(`/api/summoner/${testSummonerId}`)
+        .delete(`/api/minion/${testMinionId}`)
         .end((err, res) => {
           expect(res.status).to.equal(200)
           done()

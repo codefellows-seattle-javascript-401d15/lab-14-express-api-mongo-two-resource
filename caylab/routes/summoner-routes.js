@@ -9,7 +9,6 @@ module.exports = function(router){
   router.get('/summoner', (req, res) => {
     summonerCtrl.fetchSummoners()
     .then(summoner =>{
-      // console.log(summoner)
       res.json(summoner)
     })
     .catch(err => res.status(400).send(err.message))
@@ -19,7 +18,6 @@ module.exports = function(router){
     if(!req.params.id) return res.status(400).send(createError('You too stupid to find a summoner, boy?'))
     summonerCtrl.fetchSummoner(req.params.id)
     .then(summoner => {
-      // console.log(summoner)
       res.json(summoner)
     })
   })
@@ -34,7 +32,6 @@ module.exports = function(router){
   router.put('/summoner/:summonerId/minion/:minionId', (req, res) => {
     Summoner.findByIdAndAddMinion(req.params.summonerId, req.body, req.params.minionId)
     .then(summoner => {
-      // console.log(summoner)
       res.json(summoner)
     })
     .catch(err => console.error(err))
@@ -47,18 +44,16 @@ module.exports = function(router){
 
     summonerCtrl.updateSummoner(req.params.id, req.body)
     .then(summoner => {
-      // console.log(summoner)
       res.json(summoner)
     })
   })
 
   //===========================================
   router.delete('/summoner/:id', (req, res) => {
-    if(!req.params.id) return res.status(400).send(createError('You done fucked up the delete'))
+    if(!req.params.id) return res.status(400).send(createError('Incorrectly formatted the delete'))
 
     summonerCtrl.deleteSummoner(req.params.id)
     .then(summoner => {
-      // console.log(summoner)
       res.json(summoner)
     })
   })
