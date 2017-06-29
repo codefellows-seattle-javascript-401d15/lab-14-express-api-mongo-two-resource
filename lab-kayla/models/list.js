@@ -2,29 +2,30 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const listItem = require('./note')
+const Note = require('./note')
 
-const listSchema = Schema({
+const listSchema = Schema({//eslint-disable-line
   name: {type: String, required: true},
   time: {type: Date, default: Date.now},
-  listItems: [{type: Schema.Types.ObjectId, ref: 'listItem'}]
+  notes: [{type: Schema.Types.ObjectId, ref: 'note'}]
+
 })
 
 const List = module.exports = mongoose.model('list', listSchema)
 
-List.findByIdAndAddListItem = function(id, listItem) {
+List.findByIdAndAddNote = function(id, note) {
   return List.findById(id)
   .then(list => {
-    console.log(list);
-    listItem.listId = list._id
+    note.listId = list._id
     this.tempList = list
-    return new ListItem(listItem).save()
+    return new Note(note).save()
   })
-  .then(listItem => {
-    this.tepmList.listItem.push(listItem._id)
-    this.tempListItem = listItem
+  .then(note => {
+    this.tepmList.note.push(note._id)
+    this.tempNote = note
     return this.tempList.save()
   })
-  .then(() => this.tempListItem)
+  .then(() => this.tempNote)
+
   .catch(err => Promise.reject(err))
 }

@@ -6,12 +6,12 @@ const Promise = require('bluebird');
 const bodyParser = require('body-parser').json();
 
 const app = module.exports = express();
-const router = express.Router();
+const router = express.Router();//eslint-disable-line
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/list-dev';
 
-const noteRoutes = require('./routes/note-routes')(router);
-const listRoutes = require('./routes/list-routes')(router);
+const noteRoutes = require('./routes/note.js')(router);
+const listRoutes = require('./routes/list.js')(router);
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
