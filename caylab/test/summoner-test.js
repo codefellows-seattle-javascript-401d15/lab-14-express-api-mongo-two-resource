@@ -1,12 +1,9 @@
 'use strict'
 
 const server = require('../server')
-const Promise = require('bluebird')
 const chai = require('chai')
 const http = require('chai-http')
 const expect = require('chai').expect
-const Summoner = require('../models/summoner.js')
-const fs = Promise.promisifyAll(require('fs'), {suffix: 'Prom'})
 
 chai.use(http)
 
@@ -103,13 +100,29 @@ describe('Summoner Routes Module', function(){
           expect(res.body._id).to.equal(testSummonerId)
           expect(res.body.name).to.equal(putSummoner.name)
           expect(res.body.ability).to.equal(putSummoner.ability)
-          console.log(res.body)
           done()
         })
       })
     })
 
-
+    describe('Deleting a summoner', () => {
+      it('should throw an error 404', done => {
+        chai.request(server)
+        .delete('/api/summoner/')
+        .end((err, res) => {
+          expect(res.status).to.equal(404)
+          done()
+        })
+      })
+      it('should delete a summoner and return a 200', done => {
+        chai.request(server)
+        .delete(`/api/summoner/${testSummonerId}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          done()
+        })
+      })
+    })
 
   })
 })
