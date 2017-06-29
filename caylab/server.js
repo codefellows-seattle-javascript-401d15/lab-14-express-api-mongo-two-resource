@@ -9,7 +9,7 @@ const bodyParser = require('body-parser').json();
 //server instance refs
 const app = module.exports = express();
 const router = express.Router();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/minion-env';
 
 //routes
